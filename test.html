@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<title>terminalize.js(テストページ)</title>
+<link rel="stylesheet" type="text/css" href="./terminalize.css"/>
+<link rel="stylesheet" type="text/css" href="./test.css"/>
+<script src="terminalize.js"></script>
+<script>
+function inputListener1(str) {
+  alert("L1: "+str);
+}
+function inputListener2(str) {
+  alert("L2: "+str);
+}
+var term1;
+var term2;
+function init() {
+  term1 = terminalize("stdio");
+  term1.write("標準出力チェック1\n");
+  term1.write("標準出力チェック2\n");
+  term1.write("aaaa半角英数4文字\n");
+  term1.write("\t左はタブ1つ\n");
+  term1.write("    左は半角スペース4つ\n");
+
+  term2 = terminalize("stdio2",inputListener2);
+  term2.write("標準出力チェック3\n");
+  term2.write("標準出力チェック4\n");
+  term2.write("１２３４５６７８９０\n");
+  term2.write("12345678901234567890\n");
+}
+function changeListener() {
+  term1.removeInputListener(inputListener1);
+  
+}
+</script>
+<body onload="init();">
+
+<h1>terminalize.js(テストページ)</h1>
+
+<p><a href="./memo.mm">メモ</a>．</p>
+
+<!-- <div id="stdio"/>という書き方はダメ．そうしちゃうと
+下の要素と合体する．知らなかった． -->
+<div id="stdio">
+</div>
+
+<br/>
+
+<input type="button" onClick="term1.clear();" value="termClear"/>
+<input type="button" onClick="term1.addInputListener(inputListener1);" value="addListener"/>
+<input type="button" onClick="term1.removeInputListener(inputListener1);" value="removeListener"/>
+<input type="button" onClick="alert(term1.read());" value="read"/>
+<input type="button" onClick="term1.echoOn();" value="echoOn"/>
+<input type="button" onClick="term1.echoOff();" value="echoOff"/>
+<input type="button" onClick="term1.setPrompt('');" value="noPrompt"/>
+<input type="button" onClick="term1.setPrompt('> ');" value="prompt"/>
+
+<hr/>
+
+<div id="stdio2">
+</div>
+
+</body>
+</html>
